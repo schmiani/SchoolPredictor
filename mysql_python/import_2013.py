@@ -16,11 +16,16 @@ input_file = '../data/2012_2013_All_ProgressReport_Results_2013_12_19.csv'
 # read in basic data and put into mysql table
 # get size of table
 info = csv.reader(file(input_file))
-flag = False
-while flag == False:
-    header = info.next()
-    if header[1] == 'DBN':
-        flag = True
+
+def get_header(info):
+    flag = False
+    while flag == False:
+        header = info.next()
+        if header[1] == 'DBN':
+            flag = True
+    return header
+
+header = get_header(info)
 
 count = 0
 indexes = []
@@ -39,11 +44,7 @@ L = np.zeros((nrows,ncols))
 
 # get maximum width of columns in table
 info = csv.reader(file(input_file))
-flag = False
-while flag == False:
-    header = info.next()
-    if header[1] == 'DBN':
-        flag = True
+header = get_header(info)
 
 for i,row in enumerate(info):
     for ind in indexes_sort:
@@ -55,12 +56,8 @@ maxwidth = L.max(0)
 
 # read in data and put into table
 info = csv.reader(file(input_file))
-flag = False
-while flag == False:
-    header = info.next()
-    if header[1] == 'DBN':
-        flag = True
-        
+header = get_header(info)
+
 headersql = [s.replace('-','_').replace(' ','_').replace('\n','_').replace('*','') for s in header]
 
 for i in range(count):
