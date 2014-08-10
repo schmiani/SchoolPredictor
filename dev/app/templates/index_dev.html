@@ -39,7 +39,7 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <!--<li><a href="#contact">Contact</a></li>-->
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -51,13 +51,26 @@
         <h1>School Predictor</h1>
         <p class="lead">Predicting Progress Report Grade for NYC public schools.</p>
       </div>
-      <div class="buttonbox">
+      <!-- <div class="buttonbox">
           <button id="querymaker">P.S. 190 Sheffield</button>
       </div>
-      <div id="citybox">
+      </br> -->
+      <div>
+        <form id="query">Enter School Name:
+        <!--<form action="javascript:alert( 'success!' );"> -->
+
+            <input type="text">
+            <input type="submit">
+
+        </form>
+      <span></span>
+      </br>
+    </div>
+      <div id="schoolbox">
           <table class="table">
           </table>
       </div>
+
 
     </div><!-- /.container -->
 
@@ -68,27 +81,39 @@
     <script src="static/js/jquery.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
     <script>
-        var query_for_cities = function() {
-            cities = [];
+        var query_for_schools = function(schoolname) {  
+            schools = [];
             jQuery.ajax(
-              'db_json',
+              'schools_json',
               {success:
                 function(data) {
-                  cities = data.cities;
-                  $("#citybox tr").remove();
-                   $("#citybox table").append('<tr><td>School</td><td>Grade 2012-13</td><td>Grade 2011-12</td><td>Grade 2010-11</td><td>Grade 2009-10</td><td>Grade 2008-09</td><td>Grade 2007-08</td><td>Grade 2006-7</td></tr>');
-                  for (i=0; i < cities.length; i++) {
-                    $("#citybox table").append('<tr><td>' + cities[i]['school'] + '</td><td>' + cities[i]['grade2013'] + '</td><td>' + cities[i]['grade2012'] + '</td><td>'  + cities[i]['grade2011'] + '</td><td>'  + cities[i]['grade2010'] + '</td><td>'  + cities[i]['grade2009'] + '</td><td>'  + cities[i]['grade2008'] + '</td><td>'  + cities[i]['grade2007'] + '</td></tr>');
-                  }
 
+                  //$( "span" ).text(schoolname).show();
+                  schools = data.schools;
+                  $("#schoolbox tr").remove();
+                  $("#schoolbox table").append('<tr><td>School</td><td>Grade 2012-13</td><td>Grade 2011-12</td><td>Grade 2010-11</td><td>Grade 2009-10</td><td>Grade 2008-09</td><td>Grade 2007-08</td><td>Grade 2006-7</td></tr>');
+                  for (i=0; i < schools.length; i++) {
+                    if (schools[i]['school'].indexOf(schoolname) > -1) {
+                      $("#schoolbox table").append('<tr><td>' + schools[i]['school'] + '</td><td>' + schools[i]['grade2013'] + '</td><td>' + schools[i]['grade2012'] + '</td><td>'  + schools[i]['grade2011'] + '</td><td>'  + schools[i]['grade2010'] + '</td><td>'  + schools[i]['grade2009'] + '</td><td>'  + schools[i]['grade2008'] + '</td><td>'  + schools[i]['grade2007'] + '</td></tr>');
+                    }
+                  }
                 }
               }
             )
         }
         $(document).ready(function() {
-            $('#querymaker').click(query_for_cities);
-            }
-        )
+            $( "form" ).submit(function( event ) {
+              //if ( $( "input:first" ).val() === "P.S. 190 Sheffield" ) {
+                $( "span" ).text( "   " ).show();
+                schoolname = $( "input" ).val();
+                query_for_schools(schoolname);
+                //$( "span" ).text( "Validated..." ).show();
+
+                //return; 
+              //}
+              event.preventDefault();
+            });
+        });
     </script>
   </body>
 </html>
