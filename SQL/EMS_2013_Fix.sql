@@ -1,0 +1,3 @@
+USE school;
+ALTER TABLE EMS_2013_All ADD School_Type varchar(10);
+UPDATE EMS_2013_All, EMS_2013_SUMMARY SET EMS_2013_All.School_Type = EMS_2013_Summary.School_Type WHERE EMS_2013_All.DBN=EMS_2013_Summary.DBN;
