@@ -1,7 +1,7 @@
 USE school;
 CREATE OR REPLACE VIEW AllYears_EMS AS
     SELECT 
-        a.DBN,
+        a.DBN, a.School,
         b.Overall_Score AS 2012_13_SCORE,
         c.Overall_Score AS 2011_12_SCORE,
         d.Overall_Score AS 2010_11_SCORE,
