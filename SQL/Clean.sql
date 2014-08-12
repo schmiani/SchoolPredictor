@@ -13,5 +13,16 @@ SELECT Overall_Score FROM EMS_2012_All ORDER BY Overall_Score ASC LIMIT 10;
 UPDATE EMS_2012_All SET Overall_Score = NULL WHERE Overall_Score = '';
 SELECT Overall_Score FROM EMS_2013_Summary ORDER BY Overall_Score ASC LIMIT 10;
 UPDATE EMS_2013_Summary SET Overall_Score = NULL WHERE Overall_Score = '.';
+
 SELECT Overall_Score FROM EMS_2007_All WHERE Overall_Score LIKE '%(%)%';
 UPDATE EMS_2007_All SET Overall_Score = '0' WHERE Overall_Score LIKE '%(%)%';
+
+SELECT School_Type FROM EMS_2007_All WHERE School_Type = 'MIDDLE SCHOOL';
+UPDATE EMS_2007_All SET School_Type = 'Middle' WHERE School_Type = 'MIDDLE SCHOOL';
+SELECT School_Type FROM EMS_2007_All WHERE School_Type = 'ELEMENTARY';
+UPDATE EMS_2007_All SET School_Type = 'Elementary' WHERE School_Type = 'ELEMENTARY';
+
+SELECT School_Type FROM EMS_2008_All WHERE School_Type = 'MIDDLE SCHOOL';
+UPDATE EMS_2008_All SET School_Type = 'Middle' WHERE School_Type = 'MIDDLE SCHOOL';
+SELECT School_Type FROM EMS_2008_All WHERE School_Type = 'ELEMENTARY';
+UPDATE EMS_2008_All SET School_Type = 'Elementary' WHERE School_Type = 'ELEMENTARY';
