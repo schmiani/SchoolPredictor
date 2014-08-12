@@ -1,7 +1,7 @@
 USE school;
 CREATE OR REPLACE VIEW AllYears_EMS AS
     SELECT 
-        a.DBN, a.School,
+        a.DBN, a.School, a.School_Type,
         b.Overall_Score AS 2012_13_SCORE,
         c.Overall_Score AS 2011_12_SCORE,
         d.Overall_Score AS 2010_11_SCORE,
@@ -10,7 +10,7 @@ CREATE OR REPLACE VIEW AllYears_EMS AS
 		g.Overall_Score AS 2007_08_SCORE,
 		h.Overall_Score AS 2006_07_SCORE
     FROM
-        AllDBN a
+        EMS_All_Info a
             LEFT JOIN
         EMS_2013_Summary b ON a.DBN = b.DBN
             LEFT JOIN
