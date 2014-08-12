@@ -46,31 +46,28 @@ fig.savefig('2006_07_score_hist.png')
 df = df_mysql
 
 df['last_pred'] = df['2011_12_SCORE']
-
-df['median_pred'] = df['2011_12_SCORE'].median()
-
 df['median_indiv_pred'] = df[['2011_12_SCORE','2010_11_SCORE','2009_10_SCORE','2008_09_SCORE','2007_08_SCORE','2006_07_SCORE']].median(1)
-
-RMSE_median = ((df['median_pred']-df['2012_13_SCORE'])**2).mean()**(0.5)
-RMSE_median
+df['mean_indiv_pred'] = df[['2011_12_SCORE','2010_11_SCORE','2009_10_SCORE','2008_09_SCORE','2007_08_SCORE','2006_07_SCORE']].mean(1)
 
 n = df.shape[0]
-n
-
-median_notnull_perc = (df['median_pred']-df['2012_13_SCORE']).count()/float(df.shape[0])
-median_notnull_perc
 
 RMSE_last = ((df['last_pred']-df['2012_13_SCORE'])**2).mean()**(0.5)
-RMSE_last
+print "RMSE for using last years score: " + str(RMSE_last)
 
 last_notnull_perc = (df['last_pred']-df['2012_13_SCORE']).count()/float(df.shape[0])
-last_notnull_perc
+print str(last_notnull_perc) + "% not Null"
 
 RMSE_median_indiv = ((df['median_indiv_pred']-df['2012_13_SCORE'])**2).mean()**(0.5)
-RMSE_median_indiv
+print "RMSE for using median over previous years: " +  str(RMSE_median_indiv)
 
 median_indiv_notull_perc = (df['median_indiv_pred']-df['2012_13_SCORE']).count()/float(df.shape[0])
-median_indiv_notull_perc
+print str(median_indiv_notull_perc) + "% not Null"
+
+RMSE_mean_indiv = ((df['mean_indiv_pred']-df['2012_13_SCORE'])**2).mean()**(0.5)
+print "RMSE for using mean over previous years: " +  str(RMSE_mean_indiv)
+
+mean_indiv_notull_perc = (df['mean_indiv_pred']-df['2012_13_SCORE']).count()/float(df.shape[0])
+print str(mean_indiv_notull_perc) + "% not Null"
 
 
 df['std'] = df[['2012_13_SCORE','2011_12_SCORE','2010_11_SCORE','2009_10_SCORE','2008_09_SCORE','2007_08_SCORE','2006_07_SCORE']].std(1)
