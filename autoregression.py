@@ -38,13 +38,13 @@ imputer.fit(y)
 y_imputed = imputer.transform(y)
 
 
-model.fit(X_imputed,transpose(y_imputed))
+model.fit(X_imputed,np.ravel(y_imputed))
 
 
 out = model.predict(X_imputed)
 
 
-model.score(X_imputed,transpose(y_imputed))
+model.score(X_imputed,np.ravel(y_imputed))
 
 
 df = df_mysql
