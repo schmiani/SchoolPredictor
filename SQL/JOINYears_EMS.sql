@@ -13,7 +13,7 @@ CREATE OR REPLACE VIEW AllYears_EMS AS
 		f.Overall_Score AS 2008_09_SCORE,
 		f.Grade AS 2008_09_GRADE,
 		g.Overall_Score AS 2007_08_SCORE,
-		g.Grade AS 2007_08_GARDE,
+		g.Grade AS 2007_08_GRADE,
 		h.Overall_Score AS 2006_07_SCORE,
 		h.Grade AS 2006_07_GRADE
     FROM
