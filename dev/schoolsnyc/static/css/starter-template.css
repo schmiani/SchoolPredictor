@@ -1,0 +1,30 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+table {
+  border: 0px solid black;
+}
+
+.buttonbox {
+    margin: 0 auto;
+    font-size: 20px;
+}
+
+#citybox {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    float: left;
+}
+
+#citybox table {
+    margin: 1em;
+    width: 100%;
+}
+
+button.link { background:none;border:none; }
