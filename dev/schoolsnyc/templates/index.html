@@ -32,11 +32,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="index">School Quality Predictor</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="index">Home</a></li>
             <!--<li><a href="#about">About</a></li>-->
             <!--<li><a href="#contact">Contact</a></li>-->
           </ul>
@@ -49,7 +49,8 @@
         <h1>School Quality Predictor</h1>
         <p class="lead">Predicting Progress Report Grade for NYC public schools.</p>
       </div>
-      <div class="search-template">
+      <div id="jumbo"></div>
+      <div id="searchform" class="search-template">
         <form role="form">
           <div class="form-group">
             <label for="InputSchool"><h2>Enter School Name:</h2></label>
@@ -58,10 +59,28 @@
           <button type="submit" class="btn btn-default">Submit</button>
         </form>
       </div>
-      <div id="schoollist">
-        <ul class="list">
-        </ul>
-      </div>
+      
+      <table class="ltable">
+        <td>
+          <div id="schoollist">
+            <ul class="list">
+            </ul>
+          </div>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td valign="top">
+          <div id="comp-list">
+            <h4 align="top">Saved Schools: </h4>
+            <ul class="list-group" id="savedlist">
+            </ul>
+            <a id="comp-btn" class="btn btn-primary btn-lg active" role="button">Compare Saved Schools</a>
+          </div>
+        </td>
+      </table>
+      
     </div><!-- /.container -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
@@ -75,13 +94,11 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save School</button>
+            <button id="savebtn" type="button" class="btn btn-primary">Save School</button>
           </div>
         </div>
       </div>
     </div>
-
-
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -89,34 +106,58 @@
     <script src="static/js/jquery.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
     <script>
-        var query_for_schools = function(schoolname) {  
-            schools = [];
-            jQuery.ajax(
-              'schools_json',
-              {success:
-                function(data) {
-                  schools = data.schools;
-                  $("#schoollist li").remove();
-                  $("#schoollist ul").append('<span><h4>Schools: </h4></span>');
-                  for (i=0; i < schools.length; i++) {
-                    if (schools[i]['school'].toLowerCase().indexOf(schoolname.toLowerCase()) > -1) {
-                      $("#schoollist ul").append('<li class="school-li" id =' + i.toString() +'><button id =' + i.toString() +' class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">' + schools[i]['school'] + '</button></li>');
-                    }
+      var savedschools = [];
+      var query_for_schools = function(schoolname) { 
+          //schools = [];
+          jQuery.ajax(
+            'schools_json',
+            {success:
+              function(data,textStatus) {
+                //console.log(textStatus)
+                schools = data.schools;
+                $("#schoollist li").remove();
+                $("#schoollist ul").append('<span><h4>Schools: </h4></span>');
+                for (i=0; i < schools.length; i++) {
+                  if (schools[i]['school'].toLowerCase().indexOf(schoolname.toLowerCase()) > -1) {
+                    $("#schoollist ul").append('<li class="school-li" id =' + i.toString() +'><lbutton id =' + i.toString() +' class="btn btn-link" data-toggle="modal" data-target="#myModal"><h4>' + schools[i]['school'] + '</h4></lbutton></li>');
                   }
-                  $("button").click(function() {
-                    $(".modal-title").html(schools[this.id]['school']+ ' (' + schools[this.id]['schooltype'] + ')');
-                    $(".modal-body").html('<table class="mytable"><tr><td><h4>Predicted Grade for 2013-14: </h4></td><td><h1>' + schools[this.id]['grade2014'] + '</h1></td></tr></table><h4>Grade History: </h4><table class="table"><tr><th>2006-07</th><th>2007-08</th><th>2008-09</th><th>2009-10</th><th>2009-10</th><th>2010-11</th><th>2011-12</th></tr><tr><td><h4>'  + schools[this.id]['grade2007'] + '</h4></td><td><h4>'  + schools[this.id]['grade2008'] + '</h4></td><td><h4>'  + schools[this.id]['grade2009'] + '</h4></td><td><h4>'  + schools[this.id]['grade2010'] + '</h4></td><td><h4>'  + schools[this.id]['grade2011'] + '</h4></td><td><h4>'  + schools[this.id]['grade2012'] + '</h4></td><td><h4>'  + schools[this.id]['grade2013'] + '</h4></td></tr></table></h3><br><h4>Percentile of Math and English Language Performance City-wide: </h4><table class="table"><tr><th>2006-07</th><th>2007-08</th><th>2008-09</th><th>2009-10</th><th>2010-11</th><th>2011-12</th><th>2012-13</th></tr><tr><td><h4>'  + schools[this.id]['perc2007'] + '%</h4></td><td><h4>'  + schools[this.id]['perc2008'] + '%</h4></td><td><h4>'  + schools[this.id]['perc2008'] + '%</h4></td><td><h4>'  + schools[this.id]['perc2009'] + '%</h4></td><td><h4>'  + schools[this.id]['perc2010'] + '%</h4></td><td><h4>'  + schools[this.id]['perc2011'] + '%</h4></td><td><h4>'  + schools[this.id]['perc2012'] + '%</h4></td></tr></table>');
-                  })
                 }
+                $("lbutton").click(function() {
+                  $(".modal-title").html(schools[this.id]['school']+ ' (' + schools[this.id]['schooltype'] + ')');
+                  currentschool = this.id
+                  $(".modal-body").html('<table class="mytable"><tr><td><h4>Predicted Grade for 2013-14: </h4></td><td><h1>' + schools[this.id]['grade2014'] + '</h1></td></tr></table><h4>Grade History: </h4><table class="table"><tr><th>2006-07</th><th>2007-08</th><th>2008-09</th><th>2009-10</th><th>2009-10</th><th>2010-11</th><th>2011-12</th></tr><tr><td><h4>'  + schools[this.id]['grade2007'] + '</h4></td><td><h4>'  + schools[this.id]['grade2008'] + '</h4></td><td><h4>'  + schools[this.id]['grade2009'] + '</h4></td><td><h4>'  + schools[this.id]['grade2010'] + '</h4></td><td><h4>'  + schools[this.id]['grade2011'] + '</h4></td><td><h4>'  + schools[this.id]['grade2012'] + '</h4></td><td><h4>'  + schools[this.id]['grade2013'] + '</h4></td></tr></table></h3><br><h4>Percentile of Math and English Language Performance City-wide: </h4><table class="table"><tr><th>2006-07</th><th>2007-08</th><th>2008-09</th><th>2009-10</th><th>2010-11</th><th>2011-12</th><th>2012-13</th></tr><tr><td><h4>'  + schools[this.id]['perc2007'] + '%</h4></td><td><h4>'  + schools[this.id]['perc2008'] + '%</h4></td><td><h4>'  + schools[this.id]['perc2008'] + '%</h4></td><td><h4>'  + schools[this.id]['perc2009'] + '%</h4></td><td><h4>'  + schools[this.id]['perc2010'] + '%</h4></td><td><h4>'  + schools[this.id]['perc2011'] + '%</h4></td><td><h4>'  + schools[this.id]['perc2012'] + '%</h4></td></tr></table>');
+                })
               }
-            )
+            }
+          )
         }
-        $(document).ready(function() {
+        var compare_schools = function(savedschools) {
+          console.log(schools[savedschools[0]]['school'])
+          $("#jumbo").html('<br>')
+          for (i=0; i < savedschools.length; i++) {
+            $("#jumbo").append('<div class="jumbotron"><h4>'+ schools[savedschools[i]]['school'] +'</h4><table class="mytable"><tr><td><h4>Predicted Grade for 2013-14: </h4></td><td><h1>' + schools[savedschools[i]]['grade2014'] + '</h1></td></tr></table><h4>Grade History: </h4><table class="table"><tr><th>2006-07</th><th>2007-08</th><th>2008-09</th><th>2009-10</th><th>2009-10</th><th>2010-11</th><th>2011-12</th></tr><tr><td><h4>'  + schools[savedschools[i]]['grade2007'] + '</h4></td><td><h4>'  + schools[savedschools[i]]['grade2008'] + '</h4></td><td><h4>'  + schools[savedschools[i]]['grade2009'] + '</h4></td><td><h4>'  + schools[savedschools[i]]['grade2010'] + '</h4></td><td><h4>'  + schools[savedschools[i]]['grade2011'] + '</h4></td><td><h4>'  + schools[savedschools[i]]['grade2012'] + '</h4></td><td><h4>'  + schools[savedschools[i]]['grade2013'] + '</h4></td></tr></table></h3><br><h4>Percentile of Math and English Language Performance City-wide: </h4><table class="table"><tr><th>2006-07</th><th>2007-08</th><th>2008-09</th><th>2009-10</th><th>2010-11</th><th>2011-12</th><th>2012-13</th></tr><tr><td><h4>'  + schools[savedschools[i]]['perc2007'] + '%</h4></td><td><h4>'  + schools[savedschools[i]]['perc2008'] + '%</h4></td><td><h4>'  + schools[savedschools[i]]['perc2008'] + '%</h4></td><td><h4>'  + schools[savedschools[i]]['perc2009'] + '%</h4></td><td><h4>'  + schools[savedschools[i]]['perc2010'] + '%</h4></td><td><h4>'  + schools[savedschools[i]]['perc2011'] + '%</h4></td><td><h4>'  + schools[savedschools[i]]['perc2012'] + '%</h4></td></tr></table></div>')
+          }
+        }
+        $(function() {
           $( "form" ).submit(function( event ) {
             $( "span" ).text( "   " ).show();
             schoolname = $( "input" ).val();
             query_for_schools(schoolname);
             event.preventDefault();
+          });
+          $("#savebtn").click(function() {
+            if (savedschools.indexOf(currentschool) == -1) {
+              savedschools.push(currentschool);
+              $("#savedlist").append('<li class="list-group-item"> ' + schools[currentschool]['school'] + '</li>');
+            }
+          });
+          $("#comp-btn").click(function() {
+            //console.log(savedschools);
+            $("#schoollist").remove();
+            $("#searchform").remove();
+            $(".title-template").remove()
+            $("#comp-list").remove();
+            compare_schools(savedschools);
           });
         });
     </script>
