@@ -7,7 +7,7 @@ CREATE OR REPLACE VIEW AllYears_EMS_other AS
 		b.Performance_Score AS 2012_13_PERF_SCORE,
         c.Math_Average_Proficiency AS 2011_12_MATH,
         c.ELA_Average_Proficiency AS 2011_12_ELA,
-		c.Performance_Score AS 2012_12_PERF_SCORE,
+		c.Performance_Score AS 2011_12_PERF_SCORE,
         d.Math_Average_Proficiency AS 2010_11_MATH,
         d.ELA_Average_Proficiency AS 2010_11_ELA,
 		d.Performance_Score AS 2010_11_PERF_SCORE,
@@ -19,8 +19,10 @@ CREATE OR REPLACE VIEW AllYears_EMS_other AS
 		f.Performance_Score AS 2008_09_PERF_SCORE,
 		g.Math_Median_Proficiency AS 2007_08_MATH,
 		g.ELA_Median_Proficiency AS 2007_08_ELA,
+		g.Weighted_Performance AS 2007_08_PERF_SCORE,
 		h.Math_Median_Proficiency AS 2006_07_MATH,
-		h.ELA_Median_Proficiency AS 2006_07_ELA
+		h.ELA_Median_Proficiency AS 2006_07_ELA,
+		h.Weighted_Performance AS 2006_07_PERF_SCORE
     FROM
         EMS_All_Info a
             LEFT JOIN
