@@ -1,5 +1,8 @@
 body {
   padding-top: 50px;
+  /*!
+ * background-image: url("../img/schoolkids.gif");
+  background-size: 100%;*/
 }
 .title-template {
   padding: 50px 15px;
@@ -37,3 +40,4 @@ ul
   margin-top: .5em;
   margin-bottom: .5em;
 }
+
