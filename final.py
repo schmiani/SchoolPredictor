@@ -227,4 +227,4 @@ df_final = df_all[['DBN','School','School_Type','2013_14_SCORE_PRED','2013_14_GR
 '2012_13_PERF_PERC','2011_12_PERF_PERC','2010_11_PERF_PERC','2009_10_PERF_PERC','2008_09_PERF_PERC','2007_08_PERF_PERC','2006_07_PERF_PERC']]
 #df_final = df_final.fillna(value='')
 
-df_final.to_csv('./data/dump_final.csv',float_format ='%.1f')
+df_final.to_csv('./data/dump_final.csv',float_format ='%.0f')
