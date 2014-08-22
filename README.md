@@ -1,6 +1,17 @@
-#School Predictor
+#Q-School
 
-##Predicting Progress Report Grade for NYC public schools
+##Analytics tool for parents to explore NYC public schools 
+
+Prediction of grade (A, B, C, D, or F) given by NYC Department of Education for the current year (2013-14), which has not been graded yet. In addition, the tool includes a measure of performance of schools in terms of unadjusted student performance in Match and English Language.
+
+###Data:
+
++ Seven years of Progress Reports by NYC DoE: http://schools.nyc.gov/Accountability/tools/report/default.htm
+
++ Grading evolved over the seven years
+
++ Scores that undely the Grades are controlled for demographic characteristics of students (peering methodology)
+
 
 ###Department of Education Guide 2012-2013:  
 
