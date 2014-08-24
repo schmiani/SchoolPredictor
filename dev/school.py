@@ -6,7 +6,6 @@ from flask import jsonify
 import MySQLdb as mdb
 
 #db = mdb.connect(user="root", password="password",host="localhost", db="world_innodb", charset='utf8')
-db= mdb.connect('localhost', 'root', 'password', 'school');
 
 @app.route('/')
 @app.route('/index')
@@ -16,6 +15,7 @@ def index():
 
 @app.route("/schools_json")
 def schools_json():
+    db= mdb.connect('localhost', 'root', 'password', 'school');
     with db:
         cur = db.cursor()
         cur.execute("SELECT School, School_Type, 2013_14_GRADE_PRED, \
