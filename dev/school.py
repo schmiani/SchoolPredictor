@@ -5,8 +5,6 @@ from flask import render_template
 from flask import jsonify
 import MySQLdb as mdb
 
-#db = mdb.connect(user="root", password="password",host="localhost", db="world_innodb", charset='utf8')
-
 @app.route('/')
 @app.route('/index')
 def index():
