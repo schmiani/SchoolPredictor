@@ -9,8 +9,6 @@ import numpy as np
 import scipy.stats
 import scipy
 from sklearn import linear_model
-#from sklearn import preprocessing
-
 
 mydb = MySQLdb.connect(host='localhost',
     user='root',
@@ -135,11 +133,11 @@ df_grade['2012_13_GRADE_PRED'] = df_all['2012_13_GRADE_PRED'].apply(conv_dict.ge
 RMSE_grade = ((df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED'])**2).mean()**(0.5)
 print RMSE_grade
 
-print 'percentage of grades correct on test data: ' + str(sum((df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 0)/float(df_all['2012_13_GRADE'].count()))
-print 'percentage of grades 1 off on test data: ' + str(sum((df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 1)/float(df_all['2012_13_GRADE'].count()))
-print 'percentage of grades 2 off on test data: ' + str(sum((df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 2)/float(df_all['2012_13_GRADE'].count()))
-print 'percentage of grades 3 off on test data: ' + str(sum((df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 3)/float(df_all['2012_13_GRADE'].count()))
-print 'percentage of grades 4 off on test data: ' + str(sum((df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 4)/float(df_all['2012_13_GRADE'].count()))
+print 'percentage of grades correct on test data: ' + str(sum(abs(df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 0)/float(df_all['2012_13_GRADE'].count()))
+print 'percentage of grades 1 off on test data: ' + str(sum(abs(df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 1)/float(df_all['2012_13_GRADE'].count()))
+print 'percentage of grades 2 off on test data: ' + str(sum(abs(df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 2)/float(df_all['2012_13_GRADE'].count()))
+print 'percentage of grades 3 off on test data: ' + str(sum(abs(df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 3)/float(df_all['2012_13_GRADE'].count()))
+print 'percentage of grades 4 off on test data: ' + str(sum(abs(df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 4)/float(df_all['2012_13_GRADE'].count()))
 
 
 model.fit(X_test,y_test)
@@ -181,11 +179,11 @@ df_grade['2012_13_GRADE_PRED'] = df_all['2012_13_GRADE_PRED'].apply(conv_dict.ge
 RMSE_grade = ((df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED'])**2).mean()**(0.5)
 print RMSE_grade
 
-print 'percentage of grades correct on re-training data: ' + str(sum((df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 0)/float(df_all['2012_13_GRADE'].count()))
-print 'percentage of grades 1 off on re-training data: ' + str(sum((df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 1)/float(df_all['2012_13_GRADE'].count()))
-print 'percentage of grades 2 off on re-training data: ' + str(sum((df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 2)/float(df_all['2012_13_GRADE'].count()))
-print 'percentage of grades 3 off on re-training data: ' + str(sum((df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 3)/float(df_all['2012_13_GRADE'].count()))
-print 'percentage of grades 4 off on re-training data: ' + str(sum((df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 4)/float(df_all['2012_13_GRADE'].count()))
+print 'percentage of grades correct on re-training data: ' + str(sum(abs(df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 0)/float(df_all['2012_13_GRADE'].count()))
+print 'percentage of grades 1 off on re-training data: ' + str(sum(abs(df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 1)/float(df_all['2012_13_GRADE'].count()))
+print 'percentage of grades 2 off on re-training data: ' + str(sum(abs(df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 2)/float(df_all['2012_13_GRADE'].count()))
+print 'percentage of grades 3 off on re-training data: ' + str(sum(abs(df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 3)/float(df_all['2012_13_GRADE'].count()))
+print 'percentage of grades 4 off on re-training data: ' + str(sum(abs(df_grade['2012_13_GRADE']-df_grade['2012_13_GRADE_PRED']) == 4)/float(df_all['2012_13_GRADE'].count()))
 
 
 X_final = X_imputed[['2008_09_SCORE','2009_10_SCORE','2010_11_SCORE','2011_12_SCORE','2012_13_SCORE']]
@@ -219,12 +217,8 @@ df_all['2013_14_GRADE_PRED'][(df_all['2013_14_SCORE_PRED'] >= cut['Elementary'][
 df_all['2013_14_GRADE_PRED'][(df_all['2013_14_SCORE_PRED'] >= cut['Elementary'][2]) & (df_all['2013_14_SCORE_PRED'] < cut['Elementary'][3]) & (df_all['School_Type'] == 'Elementary')] = 'B'
 df_all['2013_14_GRADE_PRED'][(df_all['2013_14_SCORE_PRED'] >= cut['Elementary'][3]) & (df_all['School_Type'] == 'Elementary')] = 'A'
 
-
-sum(df_all['2012_13_GRADE_PRED']==df_all['2012_13_GRADE'])/float(df_all['2012_13_GRADE'].count())
-
 df_final = df_all[['DBN','School','School_Type','2013_14_SCORE_PRED','2013_14_GRADE_PRED',\
 '2012_13_SCORE','2012_13_GRADE','2011_12_SCORE','2011_12_GRADE','2010_11_SCORE','2010_11_GRADE','2009_10_SCORE','2009_10_GRADE','2008_09_SCORE','2008_09_GRADE','2007_08_SCORE','2007_08_GRADE','2006_07_SCORE','2006_07_GRADE',\
 '2012_13_PERF_PERC','2011_12_PERF_PERC','2010_11_PERF_PERC','2009_10_PERF_PERC','2008_09_PERF_PERC','2007_08_PERF_PERC','2006_07_PERF_PERC']]
-#df_final = df_final.fillna(value='')
 
 df_final.to_csv('./data/dump_final.csv',float_format ='%.0f')
